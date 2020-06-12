@@ -96,8 +96,8 @@
 }
 
 .j-padded-tb-type{
-    padding-top: 0.35em !important;
-    padding-bottom: 0.35em !important;
+    padding-top: 0.33em !important;
+    padding-bottom: 0.33em !important;
 }
 
 .j-padded-tb-z-4{
@@ -110,9 +110,19 @@
     padding-bottom: 0.5em !important;
 }
 
+.j-padded-tb-z-7{
+    padding-top: 0.7em !important;
+    padding-bottom: 0.7em !important;
+}
+
 .j-padded-tb-1{
     padding-top: 1em !important;
     padding-bottom: 1em !important;
+}
+
+.j-padded-tb-1z15{
+    padding-top: 1.15em !important;
+    padding-bottom: 1.15em !important;
 }
 
 .j-padded-tb-1z5{

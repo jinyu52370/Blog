@@ -33,7 +33,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/admin")
 public class LoginController {
-    private static final String BLOG_STATIC_IMAGES_PATH = "WEB-INF/classes/static/images/";
+    protected static final String BLOG_STATIC_IMAGES_PATH = "WEB-INF/classes/static/images/";
 
     @Resource
     private UserService userService;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/custom.css">
     <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/lib/simple-crop-master/template-1.css">
 </head>
 <body>
     <!--video background-->
@@ -55,13 +56,21 @@
     <!--内容-->
     <div class="j-padded-tb-3 j-container">
         <div class="ui container">
+            <!--上传首图-->
+            <div class="required field">
+                <div class="ui left labeled fluid input j-padded-tb-1">
+                    <label class="ui pink label j-padded-tb-1z15">首图</label>
+                    <input id="upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                    <button id="update" type="reset" class="ui black button j-padded-z-6">重新裁剪</button>
+                </div>
+            </div>
             <form id="blog-form"
                   method="post"
                   class="ui form"
                   th:object="${blog}"
                   action="#"
-                  th:action="*{id} == null ? @{/admin/blogs} : @{/admin/blogs/{id}(id=*{id})}"
-                  >
+                  th:action="*{id} == null ? @{/admin/blogs} : @{/admin/blogs/{id}(id=*{id})}">
+                <!--发布或保存-->
                 <input type="hidden" name="published">
                 <!--原创、转载、翻译-->
                 <div class="required field">
@@ -82,7 +91,7 @@
                 <!--博客内容-->
                 <div class="required field">
                     <div id="md-content" style="z-index: 1">
-                    <textarea th:text="*{content}" placeholder="请开始你的表演...乁( ˙ ω˙乁)" name="content" style="display: none"></textarea>
+                        <textarea th:text="*{content}" placeholder="请开始你的表演...乁( ˙ ω˙乁)" name="content" style="display: none"></textarea>
                     </div>
                 </div>
                 <!--分类、标签、复选框-->
@@ -132,44 +141,45 @@
                     </div>
                     <!--首图引用地址-->
                     <div class="required field">
-                        <div class="ui left labeled input">
-                            <label class="ui pink label">首图</label>
-                            <input type="text" name="picture" th:value="*{picture}" placeholder="首图引用地址">
-                        </div>
+                        <!--<div class="ui left labeled input">-->
+                            <!--<label class="ui pink label">首图</label>-->
+                            <!--<input type="text" name="picture" th:value="*{picture}" placeholder="首图引用地址">-->
+                        <!--</div>-->
+                        <input id="picture" type="hidden" name="picture" th:value="${blog.picture}">
                     </div>
                     <div class="required field">
                         <textarea name="description" th:text="*{description}" placeholder="博客描述..." maxlength="200"></textarea>
                     </div>
                     <!--复选框-->
                     <div class="inline fields">
-                            <!--推荐-->
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="recommend" name="recommend" th:checked="*{recommend}" class="hidden">
-                                    <label for="recommend">推荐</label>
-                                </div>
+                        <!--推荐-->
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="recommend" name="recommend" th:checked="*{recommend}" class="hidden">
+                                <label for="recommend">推荐</label>
                             </div>
-                            <!--转载声明-->
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="*{shareStatement}" class="hidden">
-                                    <label for="shareStatement">转载声明</label>
-                                </div>
+                        </div>
+                        <!--转载声明-->
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="*{shareStatement}" class="hidden">
+                                <label for="shareStatement">转载声明</label>
                             </div>
-                            <!--赞赏-->
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" class="hidden">
-                                    <label for="appreciation">赞赏</label>
-                                </div>
+                        </div>
+                        <!--赞赏-->
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" class="hidden">
+                                <label for="appreciation">赞赏</label>
                             </div>
-                            <!--评论-->
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="comment" name="comment" th:checked="*{comment}" class="hidden">
-                                    <label for="comment">评论</label>
-                                </div>
+                        </div>
+                        <!--评论-->
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="comment" name="comment" th:checked="*{comment}" class="hidden">
+                                <label for="comment">评论</label>
                             </div>
+                        </div>
                     </div>
                 </div>
                 <!--错误信息-->
@@ -227,6 +237,12 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
     <script src="../../static/lib/editormd/editormd.min.js"></script>
+    <!--头像裁剪-->
+    <script src="../../static/lib/simple-crop-master/prefix-umd.js"></script>
+    <script src="../../static/lib/simple-crop-master/exif.js"></script>
+    <script src="../../static/lib/simple-crop-master/transformation-matrix.js"></script>
+    <script src="../../static/lib/simple-crop-master/index.js"></script>
+    <script src="../../static/js/Canvas2Image.js"></script>
     <!--/*/</th:block>/*/-->
 
     <!--custom-->
@@ -318,6 +334,78 @@
                 allowAdditions : true
             })
         ;
+    </script>
+    <script>
+        // 头像裁剪初始化
+        var simpleCrop = new SimpleCrop({
+            title: '选择首图', //标题
+            // src: 'src/mian/resource/static/images/514.png', //裁剪图片地址
+            size: { //裁剪尺寸
+                width: 800,
+                height: 600
+            },
+            visible: false,
+            cropSizePercent: 0.65, //裁剪框显示比例
+            scaleSlider: true, //是否显示滑动控制条
+            maxScale: 3, //最大缩放倍数
+            borderWidth: 1, //裁剪框边框宽度
+            funcBtns: ['close', 'crop', 'upload'], //功能按钮配置
+            borderColor: "#fff", //裁剪框边框颜色
+            coverColor: 'rgba(0,0,0,.5)', //裁剪框遮罩颜色
+            startAngle: -360, //旋转刻度盘开始角度
+            endAngle: 360, //旋转刻度盘结束角度
+            cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
+                /*
+                 * 原作者将裁剪后的图片追加到body上；
+                 * 而我需要其base64值转换为图片存储到硬盘上，
+                 * 再将地址复制给user.avatar，所以注释掉
+                 *
+                 * console.log('cropCallback');
+                 * $resultCanvas.style.marginRight = '10px';
+                 * $resultCanvas.style.width = '50%';
+                 * document.body.appendChild($resultCanvas);
+                 */
+                /*
+                 * 测试Canvas2Image插件
+                 * document.body.appendChild(Canvas2Image.convertToJPEG($resultCanvas, 600, 600));
+                 */
+                /*
+                 * 在表单中设置了一个隐藏域<input id="avatar" type="hidden" name="avatar">，
+                 * 为其赋值裁剪后的图片的base64值
+                 */
+                $('#picture').val(Canvas2Image.convertToJPEG($resultCanvas, 800, 600).src);
+            },
+            uploadCallback: function (src) { //上传裁剪图片成功回调函数
+                // console.log('uploadCallback ' + src);
+            },
+            closeCallback: function () { //关闭组件回调函数
+                // console.log('closeCallback');
+            }
+        });
+        // 选取裁剪图片
+        var $upload = document.querySelector('#upload');
+        $upload.addEventListener('change', function (evt) {
+            var files = evt.target.files;
+            if (files.length > 0) {
+                simpleCrop.show(files[0]); //显示
+            }
+            $upload.value = ''; //清空 input value属性
+        });
+        // 更新组件参数
+        var $update = document.querySelector('#update');
+        $update.addEventListener('click', function () {
+            simpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+                cropSizePercent: 0.7,
+                size: {
+                    width: 800,
+                    height: 600
+                }
+            });
+            simpleCrop.initBoxBorder({ //更新裁剪框边框样式
+                borderColor: "#0BFF00"
+            });
+            simpleCrop.show(); //显示
+        });
     </script>
 </body>
 </html>

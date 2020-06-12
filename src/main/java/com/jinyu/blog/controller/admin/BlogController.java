@@ -10,6 +10,8 @@ import com.jinyu.blog.vo.BlogQuery;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,14 +19,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static com.jinyu.blog.controller.admin.LoginController.BLOG_STATIC_IMAGES_PATH;
 
 /**
  * @author <a href="jinyu52370@163.com">JJJ</a>
@@ -77,7 +87,11 @@ public class BlogController {
         return INPUT;
     }
 
-    private String saveOrEdit(Blog blog, HttpSession session, RedirectAttributes attributes, BindingResult result) {
+    private String saveOrEdit(Blog blog,
+                              HttpSession session,
+                              RedirectAttributes attributes,
+                              BindingResult result,
+                              HttpServletRequest request) {
         if (typeService.findByName(blog.getTitle()) != null) {
             result.rejectValue("name", "nameError", "已存在该标题");
         }
@@ -99,18 +113,19 @@ public class BlogController {
         if (result.hasErrors()) {
             return INPUT;
         }
-
+        //添加用户
         blog.setUser((User) session.getAttribute("user"));
+        //添加分类
         blog.setType(typeService.getType(blog.getType().getId()));
-
-        List<Long> tagIdListFromDB = tagsService.listTag().stream().map(Tag::getId).collect(Collectors.toList());
+        //处理新加的标签
+        List<Long> tagIdListFromDataBase = tagsService.listTag().stream().map(Tag::getId).collect(Collectors.toList());
         List<Long> tagIdListToSave = new ArrayList<>();
         Long newTagId = null;
         String tagIdsStr = blog.getTagIds();
         if (tagIdsStr != null && !"".equals(tagIdsStr)) {
             for (String split : tagIdsStr.split(",")) {
                 //如果标签首字符不是数字 或 标签在数据库中不存在，则存入数据库
-                if (!Character.isDigit(split.charAt(0)) || !tagIdListFromDB.contains(Long.valueOf(split))) {
+                if (!Character.isDigit(split.charAt(0)) || !tagIdListFromDataBase.contains(Long.valueOf(split))) {
                     //若是新添加的标签，则其id在该标签存入数据库tag表中后，加入需要保存的tagIdListToSave
                     newTagId = tagsService.saveTag(new Tag(split)).getId();
                     tagIdListToSave.add(newTagId);
@@ -121,6 +136,27 @@ public class BlogController {
             }
         }
         blog.setTags(tagsService.listTag(tagIdListToSave));
+        //添加首图
+        String base64Picture = blog.getPicture();
+        //若base64Picture包含 images 则表示是更新博客时没有选择首图
+        if (base64Picture != null && !base64Picture.contains("images") && !"".equals(base64Picture)) {
+            String pictureOriginalFilename = "首图" + blog.getId() + ".jpg";
+            String pictureAbsolutePath = request.getServletContext().getRealPath("/") + BLOG_STATIC_IMAGES_PATH + pictureOriginalFilename;
+            try {
+                // Base64解码
+                if (base64Picture.contains(",")) {
+                    String encodedImg = base64Picture.split(",")[1];
+                    byte[] decodedImg = Base64.getDecoder().decode(encodedImg.getBytes(StandardCharsets.UTF_8));
+                    //将base64编码转换为的字节数组decodedImg，再转换为MultipartFile对象
+                    MultipartFile pictureFile = new MockMultipartFile(MediaType.APPLICATION_OCTET_STREAM_VALUE, new ByteArrayInputStream(decodedImg));
+                    //写文件
+                    pictureFile.transferTo(new File(pictureAbsolutePath));
+                    blog.setPicture("/images/" + pictureOriginalFilename);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("文件上传失败");
+            }
+        }
 
         //更新
         if (blog.getId() != null) {
@@ -142,13 +178,22 @@ public class BlogController {
     }
 
     @PostMapping("/blogs")
-    public String save(Blog blog, HttpSession session, RedirectAttributes attributes, BindingResult result){
-        return saveOrEdit(blog, session, attributes, result);
+    public String save(Blog blog,
+                       HttpSession session,
+                       RedirectAttributes attributes,
+                       BindingResult result,
+                       HttpServletRequest request){
+        return saveOrEdit(blog, session, attributes, result, request);
     }
 
     @PostMapping("/blogs/{id}")
-    public String edit(@PathVariable Long id, Blog blog, HttpSession session, RedirectAttributes attributes, BindingResult result){
-        return saveOrEdit(blog, session, attributes, result);
+    public String edit(@PathVariable Long id,
+                       Blog blog,
+                       HttpSession session,
+                       RedirectAttributes attributes,
+                       BindingResult result,
+                       HttpServletRequest request){
+        return saveOrEdit(blog, session, attributes, result, request);
     }
 
     @GetMapping("/blogs/edit/{id}")
