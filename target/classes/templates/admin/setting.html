@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-weight, initial-scale=1.0">
+    <title>设置</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/custom.css">
+    <link rel="stylesheet" href="../../static/lib/simple-crop-master/template-1.css">
+</head>
+<body>
+    <!--video background-->
+    <div th:replace="admin/_fragments :: background" class="videoContainer">
+        <video class="fullScreenVideo" poster="../../static/images/bg.png" id="bgvid" playsinline="" autoplay="" muted="" loop="">
+            <source src="../../static/images/bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!--导航-->
+    <nav th:replace="admin/_fragments :: nav-active(设置)" class="ui inverted attached segment j-padded-tb-z-2 j-shadow j-opacity-9">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui violet inverted header item">后台管理</h2>
+                <a href="" class="j-item item j-mobile-hide"><i class="home icon"></i>博客</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="tags icon"></i>标签</a>
+                <div class="right j-item j-mobile-hide menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="../../static/images/514.png" alt="" class="ui huge avatar image">
+                            今愚
+                        </div>
+                        <i class="dropdown"></i>
+                        <div class="menu">
+                            <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button j-top-right j-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--内容-->
+    <div class="j-padded-tb-3 j-container-30">
+        <div class="ui container">
+            <div class="ui segment">
+                <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
+                <div class="ui fluid labeled input j-padded-tb-z-3">
+                    <label class="ui label">头像</label>
+                    <input id="upload" type="file" accept="image/png,image/jpeg">
+                </div>
+                <form id="setting-form"
+                      method="post"
+                      class="ui form"
+                      enctype="multipart/form-data"
+                      th:object="${user}"
+                      action="#"
+                      th:action="@{/admin/setting}">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <input id="avatar" type="hidden" name="avatar">
+                    <div class="ui fluid labeled input j-padded-tb-z-3">
+                        <label class="ui label">邮箱</label>
+                        <input type="text" name="email" th:value="${user.email}">
+                    </div>
+                    <div class="ui fluid labeled input j-padded-tb-z-3">
+                        <label class="ui label">昵称</label>
+                        <input type="text" name="nickname" th:value="${user.nickname}">
+                    </div>
+                    <div class="ui right aligned container j-padded-tb-z-5">
+                        <button type="reset" id="update"
+                                class="ui violet button j-padded-z-6 j-text-thin-500">重新裁剪</button>
+                        <button type="button" id="publish-setting-btn"
+                                class="ui blue button j-padded-z-6 j-text-thin-500">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--底部footer-->
+    <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment j-padded-tb-5 j-opacity-9">
+        <div class="ui container center aligned">
+            <div class="ui divided inverted stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../../static/images/wechat.png" class="ui rounded image" alt="" style="width: 9em">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column j-opacity-9">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <div class="ui inverted link list">
+                        <div class="item">Email：jinyu52370@qq.com</div>
+                        <div class="item">QQ：441366069</div>
+                        <div class="item">WeChat：乁( ˙ ω˙乁)</div>
+                    </div>
+                </div>
+                <div class="three wide column j-opacity-9">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <div class="ui inverted link list">
+                        <a href="" class="item">博客1</a>
+                        <a href="" class="item">博客2</a>
+                        <a href="" class="item">博客3</a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header j-opacity-7">Jinyu</h4>
+                    <p class="j-opacity-5">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="j-text-lined j-text-spaced j-opacity-5">
+                Copyright © 2019 - 2020 Designed by Jinyu
+            </p>
+        </div>
+    </footer>
+
+    <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <!--头像裁剪-->
+    <script src="../../static/lib/simple-crop-master/prefix-umd.js"></script>
+    <script src="../../static/lib/simple-crop-master/exif.js"></script>
+    <script src="../../static/lib/simple-crop-master/transformation-matrix.js"></script>
+    <script src="../../static/lib/simple-crop-master/index.js"></script>
+    <script src="../../static/js/Canvas2Image.js"></script>
+    <!--/*/</th:block>/*/-->
+
+    <!--custom-->
+    <script>
+        // 设置手机端的导航菜单按钮点击显示菜单
+        $('.menu.toggle').click(function () {
+            $('.j-item').toggleClass('j-mobile-hide')
+        });
+        // 导航右上角头像弹出菜单
+        $('.ui.dropdown').dropdown({
+            on: 'hover'
+        });
+        // 发布
+        $('#publish-setting-btn').click(function () {
+            $('#setting-form').submit();
+        });
+    </script>
+    <script>
+        // 头像裁剪初始化
+        var simpleCrop = new SimpleCrop({
+            title: '选择头像', //标题
+            // src: 'src/mian/resource/static/images/514.png', //裁剪图片地址
+            size: { //裁剪尺寸
+                width: 600,
+                height: 600
+            },
+            visible: false,
+            cropSizePercent: 0.65, //裁剪框显示比例
+            scaleSlider: true, //是否显示滑动控制条
+            maxScale: 3, //最大缩放倍数
+            borderWidth: 1, //裁剪框边框宽度
+            funcBtns: ['close', 'crop', 'upload'], //功能按钮配置
+            borderColor: "#fff", //裁剪框边框颜色
+            coverColor: 'rgba(0,0,0,.5)', //裁剪框遮罩颜色
+            startAngle: -360, //旋转刻度盘开始角度
+            endAngle: 360, //旋转刻度盘结束角度
+            cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
+                /*
+                 * 原作者将裁剪后的图片追加到body上；
+                 * 而我需要其base64值转换为图片存储到硬盘上，
+                 * 再将地址复制给user.avatar，所以注释掉
+                 *
+                 * console.log('cropCallback');
+                 * $resultCanvas.style.marginRight = '10px';
+                 * $resultCanvas.style.width = '50%';
+                 * document.body.appendChild($resultCanvas);
+                 */
+                /*
+                 * 测试Canvas2Image插件
+                 * document.body.appendChild(Canvas2Image.convertToJPEG($resultCanvas, 600, 600));
+                 */
+                /*
+                 * 在表单中设置了一个隐藏域<input id="avatar" type="hidden" name="avatar">，
+                 * 为其赋值裁剪后的图片的base64值
+                 */
+                $('#avatar').val(Canvas2Image.convertToJPEG($resultCanvas, 600, 600).src);
+            },
+            uploadCallback: function (src) { //上传裁剪图片成功回调函数
+                // console.log('uploadCallback ' + src);
+            },
+            closeCallback: function () { //关闭组件回调函数
+                // console.log('closeCallback');
+            }
+        });
+        // 选取裁剪图片
+        var $upload = document.querySelector('#upload');
+        $upload.addEventListener('change', function (evt) {
+            var files = evt.target.files;
+            if (files.length > 0) {
+                simpleCrop.show(files[0]); //显示
+            }
+            $upload.value = ''; //清空 input value属性
+        });
+        // 更新组件参数
+        var $update = document.querySelector('#update');
+        $update.addEventListener('click', function () {
+            simpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+                cropSizePercent: 0.7,
+                size: {
+                    width: 600,
+                    height: 600
+                }
+            });
+            simpleCrop.initBoxBorder({ //更新裁剪框边框样式
+                borderColor: "#0BFF00"
+            });
+            simpleCrop.show(); //显示
+        });
+    </script>
+</body>
+</html>

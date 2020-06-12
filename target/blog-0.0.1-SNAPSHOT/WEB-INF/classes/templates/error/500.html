@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-weight, initial-scale=1.0">
+    <title>500</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/custom.css">
+</head>
+<body>
+    <!--video background-->
+    <div th:replace="_fragments :: background" class="videoContainer">
+        <video class="fullScreenVideo" poster="../../static/images/bg.png" id="bgvid" playsinline="" autoplay="" muted="" loop="">
+            <source src="../../static/images/bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!--导航-->
+    <nav th:replace="_fragments :: nav-active(首页)" class="ui inverted attached segment j-padded-tb-z-2 j-shadow j-opacity-9">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui violet inverted header item">Jinyu</h2>
+                <a href="" class="j-item item j-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="" class="j-item item j-mobile-hide"><i class="info icon"></i>关于我</a>
+                <div class="right j-item item j-mobile-hide">
+                    <div class="ui input icon inverted transparent">
+                        <!--placeholder：占位符-->
+                        <input type="text" placeholder="Search...">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button j-top-right j-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <div class="j-container j-padded-6">
+        <div class="ui red error message j-padded-tb-4z5 j-padded-rl-3">
+            <div class="ui container">
+                <h2>500</h2>
+                <p>内部错误</p>
+            </div>
+        </div>
+    </div>
+
+    <!--底部footer-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment j-padded-tb-5 j-opacity-9">
+        <div class="ui container center aligned">
+            <div class="ui divided inverted stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../../static/images/wechat.png" class="ui rounded image" alt="" style="width: 9em">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column j-opacity-9">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <div class="ui inverted link list">
+                        <a href="" class="item">Email：jinyu52370@qq.com</a>
+                        <a href="" class="item">QQ：441366069</a>
+                        <a href="" class="item">WeChat：乁( ˙ ω˙乁)</a>
+                    </div>
+                </div>
+                <div class="three wide column j-opacity-9">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <div class="ui inverted link list">
+                        <a href="" class="item">博客1</a>
+                        <a href="" class="item">博客2</a>
+                        <a href="" class="item">博客3</a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header j-opacity-7">Jinyu</h4>
+                    <p class="j-opacity-5">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="j-text-lined j-text-spaced j-opacity-5">
+                Copyright © 2019 - 2020 Designed by Jinyu
+            </p>
+        </div>
+    </footer>
+
+    <!--/*/<th:block th:replace="_fragments :: script">/*/-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <!--/*/</th:block>/*/-->
+
+    <!--设置手机端的导航菜单按钮点击显示菜单-->
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.j-item').toggleClass('j-mobile-hide')
+        });
+    </script>
+</body>
+</html>
