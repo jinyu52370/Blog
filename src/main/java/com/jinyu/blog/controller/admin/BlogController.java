@@ -31,10 +31,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.jinyu.blog.controller.admin.LoginController.BLOG_STATIC_IMAGES_PATH;
+import static com.jinyu.blog.controller.admin.SettingController.BLOG_STATIC_IMAGES_PATH;
 
 /**
  * @author <a href="jinyu52370@163.com">JJJ</a>

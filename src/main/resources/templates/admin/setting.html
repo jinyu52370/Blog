@@ -44,38 +44,75 @@
     </nav>
 
     <!--内容-->
-    <div class="j-padded-tb-3 j-container-30">
+    <div class="j-padded-tb-3 j-container-small animate__animated animate__fadeIn">
+        <!--自适应屏幕尺寸-->
         <div class="ui container">
-            <div class="ui segment">
-                <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
-                <div class="ui fluid labeled input j-padded-tb-z-3">
-                    <label class="ui label j-padded-tb-1z15">头像</label>
-                    <input id="upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+            <div class="ui stackable grid">
+                <!--欢迎页图片、关于我图片-->
+                <div class="nine wide column">
+                    <div class="ui basic segment" style="margin-top: -1em;margin-right: -1em">
+                        <!--欢迎页图片-->
+                        <div class="ui segment">
+                            <div class="ui segment">
+                                <img src="#" th:src="@{/images/welcome.jpg}" class="ui rounded image j-padded-tb-z-3">
+                            </div>
+                            <div class="ui fluid labeled input j-padded-tb-z-1">
+                                <label class="ui label j-padded-tb-1z15">欢迎页图片</label>
+                                <input id="welcome-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                                <button id="welcome-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
+                            </div>
+                        </div>
+                        <!--关于我图片-->
+                        <div class="ui segment">
+                            <div class="ui segment">
+                                <img src="#" th:src="@{/images/aboutMe.jpg}" class="ui rounded image j-padded-tb-z-3">
+                            </div>
+                            <form action="#"></form>
+                            <div class="ui fluid labeled input j-padded-tb-z-1">
+                                <label class="ui label j-padded-tb-1z15">关于我图片</label>
+                                <input id="aboutMe-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                                <button id="aboutMe-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <form id="setting-form"
-                      method="post"
-                      class="ui form"
-                      enctype="multipart/form-data"
-                      th:object="${user}"
-                      action="#"
-                      th:action="@{/admin/setting}">
-                    <input type="hidden" name="id" th:value="${user.id}">
-                    <input id="avatar" type="hidden" name="avatar">
-                    <div class="ui fluid labeled input j-padded-tb-z-3">
-                        <label class="ui label">邮箱</label>
-                        <input type="text" name="email" th:value="${user.email}">
+                <!--用户头像、邮箱、昵称-->
+                <div class="seven wide column">
+                    <div class="ui segment" style="margin-left: -1em">
+                        <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
+                        <div class="ui fluid labeled input j-padded-tb-z-3">
+                            <label class="ui label j-padded-tb-1z15">头像</label>
+                            <input id="avatar-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                            <button id="avatar-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
+                        </div>
+                        <form id="setting-form"
+                              method="post"
+                              class="ui form"
+                              enctype="multipart/form-data"
+                              th:object="${user}"
+                              action="#"
+                              th:action="@{/admin/setting}">
+                            <!--region hidden-->
+                            <input name="id" type="hidden" th:value="${user.id}">
+                            <input id="avatar" type="hidden" name="avatar" th:value="${session.user.avatar}">
+                            <input id="welcome" type="hidden" name="welcome">
+                            <input id="aboutMe" type="hidden" name="aboutMe">
+                            <!--endregion-->
+                            <div class="ui fluid labeled input j-padded-tb-z-3">
+                                <label class="ui label">邮箱</label>
+                                <input type="text" name="email" th:value="${user.email}">
+                            </div>
+                            <div class="ui fluid labeled input j-padded-tb-z-3">
+                                <label class="ui label">昵称</label>
+                                <input type="text" name="nickname" th:value="${user.nickname}">
+                            </div>
+                            <div class="ui right aligned container j-padded-tb-z-5">
+                                <button type="button" id="publish-setting-btn"
+                                        class="ui blue button j-padded-z-6 j-text-thin-500">提交</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="ui fluid labeled input j-padded-tb-z-3">
-                        <label class="ui label">昵称</label>
-                        <input type="text" name="nickname" th:value="${user.nickname}">
-                    </div>
-                    <div class="ui right aligned container j-padded-tb-z-5">
-                        <button type="reset" id="update"
-                                class="ui violet button j-padded-z-6 j-text-thin-500">重新裁剪</button>
-                        <button type="button" id="publish-setting-btn"
-                                class="ui blue button j-padded-z-6 j-text-thin-500">提交</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -145,9 +182,10 @@
             $('#setting-form').submit();
         });
     </script>
+    <!--头像裁剪-->
     <script>
         // 头像裁剪初始化
-        var simpleCrop = new SimpleCrop({
+        var avatarSimpleCrop = new SimpleCrop({
             title: '选择头像', //标题
             // src: 'src/mian/resource/static/images/514.png', //裁剪图片地址
             size: { //裁剪尺寸
@@ -193,28 +231,124 @@
             }
         });
         // 选取裁剪图片
-        var $upload = document.querySelector('#upload');
-        $upload.addEventListener('change', function (evt) {
+        var $avatarUpload = document.querySelector('#avatar-upload');
+        $avatarUpload.addEventListener('change', function (evt) {
             var files = evt.target.files;
             if (files.length > 0) {
-                simpleCrop.show(files[0]); //显示
+                avatarSimpleCrop.show(files[0]); //显示
             }
-            $upload.value = ''; //清空 input value属性
+            $avatarUpload.value = ''; //清空 input value属性
         });
         // 更新组件参数
-        var $update = document.querySelector('#update');
-        $update.addEventListener('click', function () {
-            simpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+        var $avatarUpdate = document.querySelector('#avatar-update');
+        $avatarUpdate.addEventListener('click', function () {
+            avatarSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
                 cropSizePercent: 0.7,
                 size: {
                     width: 600,
                     height: 600
                 }
             });
-            simpleCrop.initBoxBorder({ //更新裁剪框边框样式
+            avatarSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
                 borderColor: "#0BFF00"
             });
-            simpleCrop.show(); //显示
+            avatarSimpleCrop.show(); //显示
+        });
+    </script>
+    <!--欢迎页图片裁剪-->
+    <script>
+        // 头像裁剪初始化
+        var welcomeSimpleCrop = new SimpleCrop({
+            title: '选择图片', //标题
+            size: { //裁剪尺寸
+                width: 3500,
+                height: 2000
+            },
+            visible: false,
+            cropSizePercent: 0.65, //裁剪框显示比例
+            scaleSlider: true, //是否显示滑动控制条
+            maxScale: 3, //最大缩放倍数
+            borderWidth: 1, //裁剪框边框宽度
+            funcBtns: ['close', 'crop', 'upload'], //功能按钮配置
+            borderColor: "#fff", //裁剪框边框颜色
+            coverColor: 'rgba(0,0,0,.5)', //裁剪框遮罩颜色
+            startAngle: -360, //旋转刻度盘开始角度
+            endAngle: 360, //旋转刻度盘结束角度
+            cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
+                $('#welcome').val(Canvas2Image.convertToJPEG($resultCanvas, 3500, 2000).src);
+            }
+        });
+        // 选取裁剪图片
+        var $welcomeUpload = document.querySelector('#welcome-upload');
+        $welcomeUpload.addEventListener('change', function (evt) {
+            var files = evt.target.files;
+            if (files.length > 0) {
+                welcomeSimpleCrop.show(files[0]); //显示
+            }
+            $welcomeUpload.value = ''; //清空 input value属性
+        });
+        // 更新组件参数
+        var $welcomeUpdate = document.querySelector('#welcome-update');
+        $welcomeUpdate.addEventListener('click', function () {
+            welcomeSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+                cropSizePercent: 0.7,
+                size: {
+                    width: 3500,
+                    height: 2000
+                }
+            });
+            welcomeSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
+                borderColor: "#0BFF00"
+            });
+            welcomeSimpleCrop.show(); //显示
+        });
+    </script>
+    <!--关于我图片裁剪-->
+    <script>
+        // 头像裁剪初始化
+        var aboutMeSimpleCrop = new SimpleCrop({
+            title: '选择图片', //标题
+            size: { //裁剪尺寸
+                width: 2000,
+                height: 1500
+            },
+            visible: false,
+            cropSizePercent: 0.65, //裁剪框显示比例
+            scaleSlider: true, //是否显示滑动控制条
+            maxScale: 3, //最大缩放倍数
+            borderWidth: 1, //裁剪框边框宽度
+            funcBtns: ['close', 'crop', 'upload'], //功能按钮配置
+            borderColor: "#fff", //裁剪框边框颜色
+            coverColor: 'rgba(0,0,0,.5)', //裁剪框遮罩颜色
+            startAngle: -360, //旋转刻度盘开始角度
+            endAngle: 360, //旋转刻度盘结束角度
+            cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
+                $('#aboutMe').val(Canvas2Image.convertToJPEG($resultCanvas, 2000, 1500).src);
+            }
+        });
+        // 选取裁剪图片
+        var $aboutMeUpload = document.querySelector('#aboutMe-upload');
+        $aboutMeUpload.addEventListener('change', function (evt) {
+            var files = evt.target.files;
+            if (files.length > 0) {
+                aboutMeSimpleCrop.show(files[0]); //显示
+            }
+            $aboutMeUpload.value = ''; //清空 input value属性
+        });
+        // 更新组件参数
+        var $abouttMeUpdate = document.querySelector('#aboutMe-update');
+        $abouttMeUpdate.addEventListener('click', function () {
+            aboutMeSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+                cropSizePercent: 0.7,
+                size: {
+                    width: 2000,
+                    height: 1500
+                }
+            });
+            aboutMeSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
+                borderColor: "#0BFF00"
+            });
+            aboutMeSimpleCrop.show(); //显示
         });
     </script>
 </body>
