@@ -139,7 +139,8 @@ public class BlogController {
         String base64Picture = blog.getPicture();
         //若base64Picture包含 images 则表示是更新博客时没有选择首图
         if (base64Picture != null && !base64Picture.contains("images") && !"".equals(base64Picture)) {
-            String pictureOriginalFilename = "首图" + blog.getId() + ".jpg";
+            String title = blog.getTitle();
+            String pictureOriginalFilename = "首图" + title.substring(0, 3) + title.hashCode() + ".jpg";
             String pictureAbsolutePath = request.getServletContext().getRealPath("/") + BLOG_STATIC_IMAGES_PATH + pictureOriginalFilename;
             try {
                 // Base64解码

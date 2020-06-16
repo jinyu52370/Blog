@@ -76,10 +76,12 @@
                         </div>
                     </div>
                 </div>
-                <!--用户头像、邮箱、昵称-->
+                <!--用户信息-->
                 <div class="seven wide column">
                     <div class="ui segment" style="margin-left: -1em">
-                        <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
+                        <div class="ui segment">
+                            <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
+                        </div>
                         <div class="ui fluid labeled input j-padded-tb-z-3">
                             <label class="ui label j-padded-tb-1z15">头像</label>
                             <input id="avatar-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
@@ -99,12 +101,16 @@
                             <input id="aboutMe" type="hidden" name="aboutMe">
                             <!--endregion-->
                             <div class="ui fluid labeled input j-padded-tb-z-3">
+                                <label class="ui label">昵称</label>
+                                <input type="text" name="nickname" th:value="${user.nickname}">
+                            </div>
+                            <div class="ui fluid labeled input j-padded-tb-z-3">
                                 <label class="ui label">邮箱</label>
                                 <input type="text" name="email" th:value="${user.email}">
                             </div>
                             <div class="ui fluid labeled input j-padded-tb-z-3">
-                                <label class="ui label">昵称</label>
-                                <input type="text" name="nickname" th:value="${user.nickname}">
+                                <label class="ui label">用户名</label>
+                                <input type="text" name="username" th:value="${user.username}">
                             </div>
                             <div class="ui right aligned container j-padded-tb-z-5">
                                 <button type="button" id="publish-setting-btn"

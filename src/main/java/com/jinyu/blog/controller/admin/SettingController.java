@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,7 @@ public class SettingController {
 
     @PostMapping("/setting")
     public String setting(User user, String welcome, String aboutMe, HttpServletRequest request){
+        //头像
         String base64Avatar = user.getAvatar();
         //base64头像非空时，存储头像并将路径赋值给user.avatar
         if (base64Avatar != null && !base64Avatar.contains("images")&& !"".equals(base64Avatar)) {

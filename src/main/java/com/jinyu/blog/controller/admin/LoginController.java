@@ -61,9 +61,4 @@ public class LoginController {
         session.removeAttribute("user");
         return "redirect:/admin";
     }
-
-    //获得密码的Md5值
-    public static void main(String[] args) {
-        System.out.println(DigestUtils.md5DigestAsHex("root".getBytes()));
-    }
 }
