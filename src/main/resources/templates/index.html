@@ -176,7 +176,7 @@
                                    th:href="@{/types/{id}(id=${type.id})}">
                                     <span th:text="${type.name}">学习日志</span>
                                     <div class="ui basic blue label j-text-thin"
-                                        th:text="${#arrays.length(type.blogs)}">
+                                         th:text="${#arrays.length(type.blogs)}">
                                         10
                                     </div>
                                 </a>
@@ -285,13 +285,21 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
     <!--/*/</th:block>/*/-->
-    <script type="text/javascript" src="../static/js/jquery.pjax.js" th:src="@{/js/jquery.pjax.js}"></script>
+    <!--<script type="text/javascript" src="../static/js/jquery.pjax.js" th:src="@{/js/jquery.pjax.js}"></script>-->
 
     <!--设置手机端的导航菜单按钮点击显示菜单-->
     <script>
         $('.menu.toggle').click(function () {
             $('.j-item').toggleClass('j-mobile-hide')
         });
+        // function contentPjax() {
+        //     $.pjax({
+        //         // url: '/blog/test',
+        //         url: '/blog/test',
+        //         container: '#index-content'
+        //     });
+        //     return false;
+        // }
     </script>
 </body>
 </html>
