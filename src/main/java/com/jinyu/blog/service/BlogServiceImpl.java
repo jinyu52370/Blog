@@ -1,10 +1,8 @@
 package com.jinyu.blog.service;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.jinyu.blog.dao.BlogDao;
 import com.jinyu.blog.dao.CommentDao;
 import com.jinyu.blog.entity.Blog;
-import com.jinyu.blog.entity.Comment;
 import com.jinyu.blog.entity.Type;
 import com.jinyu.blog.exception.NotFoundException;
 import com.jinyu.blog.util.MarkdownUtils;

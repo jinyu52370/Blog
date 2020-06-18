@@ -8,6 +8,7 @@ import com.jinyu.blog.util.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -40,5 +41,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUser(Long id) {
         return userDao.getOne(id);
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        return userDao.getByUsername(username);
+    }
+
+    @Override
+    public String getTypeById(Long id) {
+        return userDao.getTypeById(id);
     }
 }

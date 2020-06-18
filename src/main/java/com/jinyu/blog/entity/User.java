@@ -24,7 +24,7 @@ public class User {
     private String password;
     private String email;
     private String avatar;
-    private Integer type;
+    private String type;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
@@ -99,11 +99,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
