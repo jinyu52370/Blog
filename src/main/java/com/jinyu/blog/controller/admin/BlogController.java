@@ -6,12 +6,12 @@ import com.jinyu.blog.entity.User;
 import com.jinyu.blog.service.BlogService;
 import com.jinyu.blog.service.TagService;
 import com.jinyu.blog.service.TypeService;
+import com.jinyu.blog.util.UploadFileUtils;
 import com.jinyu.blog.vo.BlogQuery;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,21 +19,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.jinyu.blog.controller.admin.SettingController.BLOG_STATIC_IMAGES_PATH;
 
 /**
  * @author <a href="jinyu52370@163.com">JJJ</a>
@@ -52,6 +44,8 @@ public class BlogController {
     private TypeService typeService;
     @Resource
     private TagService tagsService;
+    @Value("${serverIp}")
+    private String serverIp;
 
     @GetMapping("/blogs")
     public String blogs(@PageableDefault(
@@ -137,25 +131,13 @@ public class BlogController {
         blog.setTags(tagsService.listTag(tagIdListToSave));
         //添加首图
         String base64Picture = blog.getPicture();
-        //若base64Picture包含 images 则表示是更新博客时没有选择首图
-        if (base64Picture != null && !base64Picture.contains("images") && !"".equals(base64Picture)) {
-            String title = blog.getTitle();
-            String pictureOriginalFilename = "首图" + title.substring(0, 3) + title.hashCode() + ".jpg";
-            String pictureAbsolutePath = request.getServletContext().getRealPath("/") + BLOG_STATIC_IMAGES_PATH + pictureOriginalFilename;
-            try {
-                // Base64解码
-                if (base64Picture.contains(",")) {
-                    String encodedImg = base64Picture.split(",")[1];
-                    byte[] decodedImg = Base64.getDecoder().decode(encodedImg.getBytes(StandardCharsets.UTF_8));
-                    //将base64编码转换为的字节数组decodedImg，再转换为MultipartFile对象
-                    MultipartFile pictureFile = new MockMultipartFile(MediaType.APPLICATION_OCTET_STREAM_VALUE, new ByteArrayInputStream(decodedImg));
-                    //写文件
-                    pictureFile.transferTo(new File(pictureAbsolutePath));
-                    blog.setPicture("/images/" + pictureOriginalFilename);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException("文件上传失败");
+        try {
+            if (base64Picture != null && !"".equals(base64Picture) && base64Picture.contains(",")) {
+                String fastDfsFileId = UploadFileUtils.getStorageClient1().upload_file1(UploadFileUtils.base64Decode(base64Picture), "jpg", null);
+                blog.setPicture(serverIp + fastDfsFileId);
             }
+        } catch (Exception e) {
+            throw new RuntimeException("首图上传失败");
         }
 
         //更新

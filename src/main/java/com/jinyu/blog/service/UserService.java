@@ -12,4 +12,8 @@ public interface UserService {
     User getByUsername(String username);
 
     String getTypeById(Long id);
+
+    Long getSettingIdById(Long id);
+
+    Long getSettingIdByType(String type);
 }

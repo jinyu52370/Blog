@@ -52,4 +52,14 @@ public class UserServiceImpl implements UserService{
     public String getTypeById(Long id) {
         return userDao.getTypeById(id);
     }
+
+    @Override
+    public Long getSettingIdById(Long id) {
+        return userDao.getSettingIdById(id);
+    }
+
+    @Override
+    public Long getSettingIdByType(String type) {
+        return userDao.getSettingIdByType(type);
+    }
 }

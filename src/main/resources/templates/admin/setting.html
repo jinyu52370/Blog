@@ -54,24 +54,24 @@
                         <!--欢迎页图片-->
                         <div class="ui segment">
                             <div class="ui segment">
-                                <img src="#" th:src="@{/images/welcome.jpg}" class="ui rounded image j-padded-tb-z-3">
+                                <img src="#" th:src="@{${user.setting.welcomeImg}}" class="ui rounded image j-padded-tb-z-3">
                             </div>
                             <div class="ui fluid labeled input j-padded-tb-z-1">
                                 <label class="ui label j-padded-tb-1z15">欢迎页图片</label>
-                                <input id="welcome-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
-                                <button id="welcome-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
+                                <input id="welcomeImg-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                                <button id="welcomeImg-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
                             </div>
                         </div>
                         <!--关于我图片-->
                         <div class="ui segment">
                             <div class="ui segment">
-                                <img src="#" th:src="@{/images/aboutMe.jpg}" class="ui rounded image j-padded-tb-z-3">
+                                <img src="#" th:src="@{${user.setting.aboutMeImg}}" class="ui rounded image j-padded-tb-z-3">
                             </div>
                             <form action="#"></form>
                             <div class="ui fluid labeled input j-padded-tb-z-1">
                                 <label class="ui label j-padded-tb-1z15">关于我图片</label>
-                                <input id="aboutMe-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
-                                <button id="aboutMe-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
+                                <input id="aboutMeImg-upload" type="file" accept="image/png,image/jpeg" class="j-padded-tb-z-7">
+                                <button id="aboutMeImg-update" type="reset" class="ui button j-padded-z-6">重新裁剪</button>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                 <div class="seven wide column">
                     <div class="ui segment" style="margin-left: -1em">
                         <div class="ui segment">
-                            <img src="#" th:src="@{${user.avatar}}" class="ui rounded image j-padded-tb-z-3">
+                            <img src="#" th:src="@{${user.setting.avatar}}" class="ui rounded image j-padded-tb-z-3">
                         </div>
                         <div class="ui fluid labeled input j-padded-tb-z-3">
                             <label class="ui label j-padded-tb-1z15">头像</label>
@@ -96,9 +96,9 @@
                               th:action="@{/admin/setting}">
                             <!--region hidden-->
                             <input name="id" type="hidden" th:value="${user.id}">
-                            <input id="avatar" type="hidden" name="avatar" th:value="${session.user.avatar}">
-                            <input id="welcome" type="hidden" name="welcome">
-                            <input id="aboutMe" type="hidden" name="aboutMe">
+                            <input id="avatar" type="hidden" name="avatar" th:value="${session.user.setting.avatar}">
+                            <input id="welcomeImg" type="hidden" name="welcomeImg" th:value="${session.user.setting.welcomeImg}">
+                            <input id="aboutMeImg" type="hidden" name="aboutMeImg" th:value="${session.user.setting.aboutMeImg}">
                             <!--endregion-->
                             <div class="ui fluid labeled input j-padded-tb-z-3">
                                 <label class="ui label">昵称</label>
@@ -264,7 +264,7 @@
     <!--欢迎页图片裁剪-->
     <script>
         // 头像裁剪初始化
-        var welcomeSimpleCrop = new SimpleCrop({
+        var welcomeImgSimpleCrop = new SimpleCrop({
             title: '选择图片', //标题
             size: { //裁剪尺寸
                 width: 3500,
@@ -281,38 +281,38 @@
             startAngle: -360, //旋转刻度盘开始角度
             endAngle: 360, //旋转刻度盘结束角度
             cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
-                $('#welcome').val(Canvas2Image.convertToJPEG($resultCanvas, 3500, 2000).src);
+                $('#welcomeImg').val(Canvas2Image.convertToJPEG($resultCanvas, 3500, 2000).src);
             }
         });
         // 选取裁剪图片
-        var $welcomeUpload = document.querySelector('#welcome-upload');
-        $welcomeUpload.addEventListener('change', function (evt) {
+        var $welcomeImgUpload = document.querySelector('#welcomeImg-upload');
+        $welcomeImgUpload.addEventListener('change', function (evt) {
             var files = evt.target.files;
             if (files.length > 0) {
-                welcomeSimpleCrop.show(files[0]); //显示
+                welcomeImgSimpleCrop.show(files[0]); //显示
             }
-            $welcomeUpload.value = ''; //清空 input value属性
+            $welcomeImgUpload.value = ''; //清空 input value属性
         });
         // 更新组件参数
-        var $welcomeUpdate = document.querySelector('#welcome-update');
-        $welcomeUpdate.addEventListener('click', function () {
-            welcomeSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+        var $welcomeImgUpdate = document.querySelector('#welcomeImg-update');
+        $welcomeImgUpdate.addEventListener('click', function () {
+            welcomeImgSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
                 cropSizePercent: 0.7,
                 size: {
                     width: 3500,
                     height: 2000
                 }
             });
-            welcomeSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
+            welcomeImgSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
                 borderColor: "#0BFF00"
             });
-            welcomeSimpleCrop.show(); //显示
+            welcomeImgSimpleCrop.show(); //显示
         });
     </script>
     <!--关于我图片裁剪-->
     <script>
         // 头像裁剪初始化
-        var aboutMeSimpleCrop = new SimpleCrop({
+        var aboutMeImgSimpleCrop = new SimpleCrop({
             title: '选择图片', //标题
             size: { //裁剪尺寸
                 width: 2000,
@@ -329,32 +329,32 @@
             startAngle: -360, //旋转刻度盘开始角度
             endAngle: 360, //旋转刻度盘结束角度
             cropCallback: function ($resultCanvas) { //图片裁剪完成回调函数
-                $('#aboutMe').val(Canvas2Image.convertToJPEG($resultCanvas, 2000, 1500).src);
+                $('#aboutMeImg').val(Canvas2Image.convertToJPEG($resultCanvas, 2000, 1500).src);
             }
         });
         // 选取裁剪图片
-        var $aboutMeUpload = document.querySelector('#aboutMe-upload');
-        $aboutMeUpload.addEventListener('change', function (evt) {
+        var $aboutMeImgUpload = document.querySelector('#aboutMeImg-upload');
+        $aboutMeImgUpload.addEventListener('change', function (evt) {
             var files = evt.target.files;
             if (files.length > 0) {
-                aboutMeSimpleCrop.show(files[0]); //显示
+                aboutMeImgSimpleCrop.show(files[0]); //显示
             }
-            $aboutMeUpload.value = ''; //清空 input value属性
+            $aboutMeImgUpload.value = ''; //清空 input value属性
         });
         // 更新组件参数
-        var $abouttMeUpdate = document.querySelector('#aboutMe-update');
+        var $abouttMeUpdate = document.querySelector('#aboutMeImg-update');
         $abouttMeUpdate.addEventListener('click', function () {
-            aboutMeSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
+            aboutMeImgSimpleCrop.updateBox({ //更新裁剪框尺寸和显示比例
                 cropSizePercent: 0.7,
                 size: {
                     width: 2000,
                     height: 1500
                 }
             });
-            aboutMeSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
+            aboutMeImgSimpleCrop.initBoxBorder({ //更新裁剪框边框样式
                 borderColor: "#0BFF00"
             });
-            aboutMeSimpleCrop.show(); //显示
+            aboutMeImgSimpleCrop.show(); //显示
         });
     </script>
 </body>

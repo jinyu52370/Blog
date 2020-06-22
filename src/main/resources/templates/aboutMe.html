@@ -45,7 +45,7 @@
             <div class="ui stackable grid">
                 <!--图片-->
                 <div class="ui eleven wide column">
-                    <img src="../static/images/aboutMe.jpg" th:src="@{/images/aboutMe.jpg}" alt="" class="ui rounded image">
+                    <img id="aboutMeImg" src="#" alt="" class="ui rounded image">
                 </div>
                 <!--个人信息-->
                 <div class="ui five wide column">
@@ -151,6 +151,11 @@
             popup: $('.wechatQR'),
             position: 'top center'
         });
+        //获取关于我的图片
+        $.get("aboutMe/img", function (data) {
+                $('#aboutMeImg').attr("src", data);
+            }
+        );
     </script>
 </body>
 </html>

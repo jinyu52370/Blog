@@ -48,7 +48,7 @@
             <div class="ui success message">
                 <h3>ごしゅじんさま~ おかえりなさい！(・ω< )★</h3>
             </div>
-            <img src="../../static/images/welcome.jpg" th:src="@{/images/welcome.jpg}" class="ui rounded bordered fluid image">
+            <img src="../../static/images/welcome.jpg" th:src="@{${session.user.setting.welcomeImg}}" class="ui rounded bordered fluid image">
         </div>
     </div>
 

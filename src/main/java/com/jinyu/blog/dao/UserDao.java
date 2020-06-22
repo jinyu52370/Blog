@@ -11,4 +11,10 @@ public interface UserDao extends JpaRepository<User, Long> {
 
     @Query("SELECT u.type FROM User u WHERE u.id = ?1")
     String getTypeById(Long id);
+
+    @Query("SELECT u.setting.id FROM User u WHERE u.id = ?1")
+    Long getSettingIdById(Long id);
+
+    @Query("SELECT u.setting.id FROM User u WHERE u.type = ?1")
+    Long getSettingIdByType(String type);
 }

@@ -118,7 +118,7 @@ public class BlogServiceImpl implements BlogService{
 
     @Override
     public List<Blog> listBlogTop(Integer size) {
-        return blogDao.findTop(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "updateTime")));
+        return blogDao.findTop(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createTime")));
     }
 
     @Override
