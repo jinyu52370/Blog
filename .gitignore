@@ -2,4 +2,3 @@ target
 *.iml
 /.idea
 *.class
-/src/main/resources/*.yml
