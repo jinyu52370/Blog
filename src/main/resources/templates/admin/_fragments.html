@@ -111,6 +111,18 @@
         <script src="../../static/lib/simple-crop-master/transformation-matrix.js" th:src="@{/lib/simple-crop-master/transformation-matrix.js}"></script>
         <script src="../../static/lib/simple-crop-master/index.js" th:src="@{/lib/simple-crop-master/index.js}"></script>
         <script src="../../static/js/Canvas2Image.js" th:src="@{/js/Canvas2Image.js}"></script>
+        <script>
+            //离开和回到页面时改变标题
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'hidden') {
+                    initialTitle = document.title;
+                    document.title = '|･ω･｀)藏...';
+                } else {
+                    document.title = '(｡･ω･｡)ﾉ被发现啦！';
+                    setTimeout(function () {document.title = initialTitle;},1500);
+                }
+            });
+        </script>
     </th:block>
 </body>
 </html>
