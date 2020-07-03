@@ -370,6 +370,11 @@
     display: inline-block !important;
 }
 
+.j-container-80{
+    max-width: 80em !important;
+    margin: auto !important;
+}
+
 .j-container{
     max-width: 72em !important;
     margin: auto !important;

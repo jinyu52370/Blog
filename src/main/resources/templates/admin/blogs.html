@@ -52,7 +52,7 @@
     </div>
 
     <!--内容-->
-    <div class="j-padded-tb-3 j-container-small animate__animated animate__fadeIn">
+    <div class="j-padded-tb-3 j-container-80 animate__animated animate__fadeIn">
         <div class="ui container">
             <!--操作成功提示-->
             <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
@@ -62,8 +62,8 @@
             </div>
 
             <!--header-->
-            <div class="ui segment j-padded-rl-2">
-                <div class="ui vertical segment form">
+            <div class="ui segment j-padded-rl-2 j-padded-tb-z-1">
+                <div class="ui vertical segment form" style="padding-bottom: 0.1em;padding-top: 1.5em">
                     <input type="hidden" name="page">
                     <div class="fields">
                         <!--标题-->
@@ -122,7 +122,7 @@
                         <th>标题</th>
                         <th>类型</th>
                         <th>推荐</th>
-                        <th>发布状态</th>
+                        <th>状态</th>
                         <th>更新时间</th>
                         <th>操作</th>
                     </tr>
