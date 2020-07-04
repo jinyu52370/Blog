@@ -134,7 +134,7 @@
                         <td th:text="${blog.type.name}">认知升级</td>
                         <td th:text="${blog.recommend} ? '是' : '否'">是</td>
                         <td th:text="${blog.published} ? '发布' : '草稿'">草稿</td>
-                        <td th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}">2020-05-28 17:48:00</td>
+                        <td th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}">2020-05-28 17:48:00</td>
                         <td>
                             <a href="#" th:href="@{/admin/blogs/edit/{id}(id=${blog.id})}" class="ui mini blue button j-text-thin">编辑</a>
                             <a href="#" th:href="@{/admin/blogs/delete/{id}(id=${blog.id})}" class="ui mini red button j-text-thin">删除</a>
@@ -146,16 +146,12 @@
                         <th colspan="7">
                             <div class="ui pagination menu" th:if="${page.totalPages}>1">
                                 <!--上一页-->
-                                <a onclick="page(this)" th:arrt="data-page=${page.number}-1}"
-                                   th:unless="${page.first}"
-                                   class="icon item">
-                                    <i class="left mini chevron icon"></i>
+                                <a onclick="page(this)" th:attr="data-page=${page.number}-1" th:unless="${page.first}"
+                                   class="icon item"><i class="left mini chevron icon"></i>
                                 </a>
                                 <!--下一页-->
-                                <a onclick="page(this)" th:arrt="data-page=${page.number}+1}"
-                                   th:unless="${page.last}"
-                                   class="icon item">
-                                    <i class="right mini chevron icon"></i>
+                                <a onclick="page(this)" th:attr="data-page=${page.number}+1" th:unless="${page.last}"
+                                   class="icon item"><i class="right mini chevron icon"></i>
                                 </a>
                             </div>
                             <a href="#" th:href="@{/admin/blogs/input}" class="ui tiny right floated blue button j-text-thin">添加</a>
@@ -222,15 +218,15 @@
             on: 'hover'
         });
         function page(obj) {
-            $("[name='page']").var($(obj).data('page'));
+            $("[name='page']").val($(obj).data("page"));
             loadList();
         }
         $("#search-btn").click(function () {
-            $("[name='page']").var(0);
+            $("[name='page']").val(0);
             loadList();
         });
         function loadList() {
-            $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+            $("#table-container").load(/*[[@{/blog/admin/blogs/search}]]*/"/blog/admin/blogs/search",{
                 title : $("[name='title']").val(),
                 typeId : $("[name='typeId']").val(),
                 recommend : $("[name='recommend']").prop('checked'),
