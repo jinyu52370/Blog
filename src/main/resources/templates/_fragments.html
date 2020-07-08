@@ -103,14 +103,17 @@
         <script src="../static/lib/jquery.waypoints/jquery.waypoints.min.js" th:src="@{/lib/jquery.waypoints/jquery.waypoints.min.js}"></script>
         <script>
             $('#newestBlogs-container').load(/*[[@{/blog/footer/newestBlogs}]]*/"/blog/footer/newestBlogs")
+        </script>
+        <script>
             //离开和回到页面时改变标题
-            document.addEventListener('visibilitychange', function () {
-                if (document.visibilityState === 'hidden') {
-                    sourceTitle = document.title;
+            var originTitle = document.title, titleTime;
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
                     document.title = '|･ω･｀)藏...';
+                    clearTimeout(titleTime);
                 } else {
                     document.title = '(｡･ω･｡)ﾉ被发现啦！';
-                    setTimeout(function () {document.title = sourceTitle;},1500);
+                    titleTime = setTimeout(function() {document.title = originTitle;},1500);
                 }
             });
         </script>
