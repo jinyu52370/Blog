@@ -1,4 +1,4 @@
-package com.jinyu.blog.util;
+package com.jinyu.blog.config;
 
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient1;

@@ -1,4 +1,4 @@
-package com.jinyu.blog.shiro;
+package com.jinyu.blog.config;
 
 import com.jinyu.blog.entity.User;
 import com.jinyu.blog.service.UserService;

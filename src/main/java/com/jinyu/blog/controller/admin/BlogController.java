@@ -6,7 +6,7 @@ import com.jinyu.blog.entity.User;
 import com.jinyu.blog.service.BlogService;
 import com.jinyu.blog.service.TagService;
 import com.jinyu.blog.service.TypeService;
-import com.jinyu.blog.util.UploadFileUtils;
+import com.jinyu.blog.config.UploadFileUtils;
 import com.jinyu.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -44,8 +44,8 @@ public class BlogController {
     private TypeService typeService;
     @Resource
     private TagService tagsService;
-    @Value("${serverIp}")
-    private String serverIp;
+    @Value("${fdfsPre}")
+    private String fdfsPre;
 
     @GetMapping("/blogs")
     public String blogs(@PageableDefault(
@@ -134,7 +134,7 @@ public class BlogController {
         try {
             if (base64Picture != null && !"".equals(base64Picture) && base64Picture.contains(",")) {
                 String fastDfsFileId = UploadFileUtils.getStorageClient1().upload_file1(UploadFileUtils.base64Decode(base64Picture), "jpg", null);
-                blog.setPicture(serverIp + fastDfsFileId);
+                blog.setPicture(fdfsPre + fastDfsFileId);
             }
         } catch (Exception e) {
             throw new RuntimeException("首图上传失败");
@@ -186,7 +186,7 @@ public class BlogController {
         model.addAttribute("blog", blog);
         return INPUT;
     }
-    
+
     @GetMapping("/blogs/delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
         blogService.deleteBlog(id);

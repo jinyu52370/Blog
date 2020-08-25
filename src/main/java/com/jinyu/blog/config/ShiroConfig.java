@@ -1,4 +1,4 @@
-package com.jinyu.blog.shiro;
+package com.jinyu.blog.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;

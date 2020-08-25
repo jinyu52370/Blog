@@ -1,7 +1,6 @@
 package com.jinyu.blog.dao;
 
 import com.jinyu.blog.entity.Blog;
-import com.jinyu.blog.entity.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,4 +34,9 @@ public interface BlogDao extends JpaRepository<Blog, Long>, JpaSpecificationExec
             "FROM Blog b " +
             "WHERE FUNCTION('date_format',b.updateTime,'%Y') = ?1")
     List<Blog> findByYear(String year);
+
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
+    @Query("UPDATE Blog b SET b.picture = ?2 WHERE b.id = ?1")
+    Integer replaceFastDfs(Long id, String picture);
 }
