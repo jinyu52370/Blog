@@ -1,6 +1,8 @@
 package com.jinyu.blog;
 
+import com.jinyu.blog.config.UploadFileUtils;
 import com.jinyu.blog.dao.BlogDao;
+import org.csource.fastdfs.StorageClient1;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
@@ -15,11 +17,11 @@ class BlogApplicationTests {
 
     @Test
     public void replaceFastDfs() {
-        String aliyun = "http://182.92.228.183:8888/";
+        String aliyun = "http://jinyu.host:8888/";
         HashMap<Long, String> map = new HashMap<>();
 
         blogDao.findAll().forEach(blog -> {
-            String[] split = blog.getPicture().split("http://jinyu.host:8888/");
+            String[] split = blog.getPicture().split("http://182.92.228.183:8888/");
             map.put(blog.getId(), aliyun + split[1]);
         });
         for (Long id : map.keySet()) {
@@ -27,6 +29,16 @@ class BlogApplicationTests {
         }
     }
 
+    @Test
+    public void fastDfsUpload() {
+        try {
+            StorageClient1 storageClient1 = UploadFileUtils.getStorageClient1();
+            String sql = storageClient1.upload_file1("F:\\@Download\\nacos-mysql.sql", "sql", null);
+            System.out.println(sql);
+        } catch (Exception e) {
+            System.out.println("上传失败");
+        }
+    }
 
     @Resource
     Jedis jedis;

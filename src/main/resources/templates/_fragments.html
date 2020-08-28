@@ -71,7 +71,7 @@
                     <div id="newestBlogs-container">
                         <div class="ui inverted link list" th:fragment="newestBlogList">
                             <a href="#" target="_blank" class="item"
-                               th:href="@{/blog/{id}(id=${blog.id})}"
+                               th:href="@{/{id}(id=${blog.id})}"
                                th:each="blog : ${newestBlogs}"
                                th:text="${blog.title}">博客1</a>
                             <!--/*-->
@@ -102,7 +102,7 @@
         <script src="../static/lib/jquery.scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/jquery.scrollTo/jquery.scrollTo.min.js}"></script>
         <script src="../static/lib/jquery.waypoints/jquery.waypoints.min.js" th:src="@{/lib/jquery.waypoints/jquery.waypoints.min.js}"></script>
         <script>
-            $('#newestBlogs-container').load(/*[[@{/blog/footer/newestBlogs}]]*/"/blog/footer/newestBlogs")
+            $('#newestBlogs-container').load(/*[[@{/footer/newestBlogs}]]*/"/footer/newestBlogs")
         </script>
         <script>
             //离开和回到页面时改变标题
@@ -116,6 +116,13 @@
                     titleTime = setTimeout(function() {document.title = originTitle;},1500);
                 }
             });
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?c2710cf13bbe1ef412de486475ffc4bb";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
         </script>
     </th:block>
 </body>

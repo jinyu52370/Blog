@@ -68,7 +68,7 @@
                                     <h3 class="ui header">
                                         <a href="#" class="j-black"
                                            target="_blank"
-                                           th:href="@{/blog/{id}(id=${blog.id})}"
+                                           th:href="@{/{id}(id=${blog.id})}"
                                            th:text="${blog.title}">
                                             明月松间照，清泉石上流
                                         </a>
@@ -80,7 +80,7 @@
                                 </div>
                                 <!--图片-->
                                 <div class="five wide column">
-                                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                    <a href="#" th:href="@{/{id}(id=${blog.id})}" target="_blank">
                                         <img src="http://via.placeholder.com/800x500" th:src="@{${blog.picture}}" alt="" class="ui rounded image">
                                     </a>
                                 </div>
@@ -225,7 +225,7 @@
                                 <div class="ui attached segment j-padded-zzzz-1"
                                      th:each="blog : ${recommendBlogs}">
                                     <a href="#" target="_blank" class="item"
-                                       th:href="@{/blog/{id}(id=${blog.id})}"
+                                       th:href="@{/{id}(id=${blog.id})}"
                                        th:text="${blog.title}">博客1
                                     </a>
                                 </div>
