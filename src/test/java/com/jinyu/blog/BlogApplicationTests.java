@@ -33,8 +33,8 @@ class BlogApplicationTests {
     public void fastDfsUpload() {
         try {
             StorageClient1 storageClient1 = UploadFileUtils.getStorageClient1();
-            String sql = storageClient1.upload_file1("F:\\@Download\\nacos-mysql.sql", "sql", null);
-            System.out.println(sql);
+            String id = storageClient1.upload_file1("D:\\@app\\minio\\data\\jinyu.host-backup\\default.json", "json", null);
+            System.out.println(id);
         } catch (Exception e) {
             System.out.println("上传失败");
         }
