@@ -64,7 +64,7 @@
                             <h3 class="ui header">
                                 <a href="#" class="j-black"
                                    target="_blank"
-                                   th:href="@{/blog/{id}(id=${blog.id})}"
+                                   th:href="@{/{id}(id=${blog.id})}"
                                    th:text="${blog.title}">
                                     明月松间照，清泉石上流
                                 </a>
@@ -76,48 +76,27 @@
                         </div>
                         <!--图片-->
                         <div class="five wide column">
-                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
-                                <img src="http://via.placeholder.com/800x500" th:src="@{${blog.picture}}" alt="" class="ui rounded image">
+                            <a href="#" th:href="@{/{id}(id=${blog.id})}" target="_blank">
+                                <img src="http://via.placeholder.com/800x500" th:src="@{${blog.picture}}" alt=""
+                                     class="ui rounded image">
                             </a>
                         </div>
                     </div>
-                </div>
-                <!--我、时间、浏览次数、分类、标签-->
-                <div class="ui attached segment j-padded-z-5">
+                    <!--时间、分类、标签-->
                     <div class="ui mobile middle aligned stackable grid j-padded-rl-2 j-mobile-rl-clear">
-                        <!--我、时间、浏览次数-->
-                        <div class="nine wide column j-margin-tb-z-1">
+                        <div class="left aligned column j-margin-tb-z-1">
                             <div class="ui horizontal link list">
-                                <!--我-->
-                                <div class="item">
-                                    <img src="http://via.placeholder.com/100x100" th:src="@{${blog.user.setting.avatar}}" alt="" class="ui avatar image">
-                                    <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">今愚</a></div>
-                                </div>
                                 <!--时间-->
-                                <div class="item">
-                                    <i class="calendar icon"></i>
-                                    <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}">2020.5.26</span>
-                                </div>
-                                <!--浏览次数-->
-                                <div class="item">
-                                    <i class="eye icon"></i>
-                                    <span th:text="${blog.views}">233</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--分类、标签-->
-                        <div class="seven wide right aligned column">
-                            <div class="ui horizontal link list">
+                                <span class="ui teal label"
+                                      th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}">2020.5.26</span>
                                 <!--分类-->
                                 <a href="#" target="_blank"
-                                   class="ui label blue
-                                           j-text-thin j-padded-tb-type j-padded-rl-z-5 j-margin-r-z3"
+                                   class="ui label blue"
                                    th:href="@{/types/{id}(id=${blog.type.id})}"
                                    th:text="${blog.type.name}">认知升级</a>
                                 <!--标签-->
                                 <a href="#" target="_blank"
-                                   class="ui violet tiny left pointing label
-                                           j-text-thin j-padded-tb-z-5 j-padded-rl-z-5"
+                                   class="ui violet label"
                                    th:href="@{/tags/{id}(id=${tag.id})}"
                                    th:each="tag : ${blog.tags}"
                                    th:text="${tag.name}">方法论</a>

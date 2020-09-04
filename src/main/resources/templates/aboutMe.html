@@ -8,154 +8,161 @@
     <link rel="stylesheet" href="../static/css/custom.css">
 </head>
 <body>
-    <!--video background-->
-    <div th:replace="_fragments :: background" class="videoContainer">
-        <video class="fullScreenVideo" poster="../static/images/bg.png" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-            <source src="../static/images/bg.mp4" type="video/mp4">
-        </video>
-    </div>
+<!--video background-->
+<div th:replace="_fragments :: background" class="videoContainer">
+    <video class="fullScreenVideo" poster="../static/images/bg.png" id="bgvid" playsinline="" autoplay="" muted=""
+           loop="">
+        <source src="../static/images/bg.mp4" type="video/mp4">
+    </video>
+</div>
 
-    <!--导航-->
-    <nav th:replace="_fragments :: nav-active(关于我)" class="ui inverted attached segment j-padded-tb-z-2 j-shadow j-opacity-9">
-        <div class="ui container">
-            <div class="ui inverted secondary stackable menu">
-                <h2 class="ui violet inverted header item">Jinyu</h2>
-                <a href="" class="j-item item j-mobile-hide"><i class="home icon"></i>首页</a>
-                <a href="" class="j-item item j-mobile-hide"><i class="idea icon"></i>分类</a>
-                <a href="" class="j-item item j-mobile-hide"><i class="tags icon"></i>标签</a>
-                <a href="" class="j-item item j-mobile-hide"><i class="clone icon"></i>归档</a>
-                <a href="" class="j-item item j-mobile-hide"><i class="info icon"></i>关于我</a>
-                <div class="right j-item item j-mobile-hide">
-                    <div class="ui input icon inverted transparent">
-                        <!--placeholder：占位符-->
-                        <input type="text" placeholder="Search...">
-                        <i class="search icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#" class="ui menu toggle black icon button j-top-right j-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
-    </nav>
-
-    <!--内容-->
-    <div class="j-padded-tb-3 j-container animate__animated animate__fadeIn">
-        <div class="ui container">
-            <div class="ui stackable grid">
-                <!--图片-->
-                <div class="ui eleven wide column">
-                    <img id="aboutMeImg" src="#" alt="" class="ui rounded image">
-                </div>
-                <!--个人信息-->
-                <div class="ui five wide column">
-                    <div class="ui top attached segment">
-                        <h4 class="ui header">关于我</h4>
-                    </div>
-                    <div class="ui attached segment">
-                        <p class="j-text">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
-                        <!--<p class="j-text">这是第二段话木大木大木大木大木大</p>-->
-                    </div>
-                    <div class="ui attached padded segment">
-                        <div class="ui blue label j-text-thin j-opacity-9">编程</div>
-                        <div class="ui blue label j-text-thin j-opacity-9">吉他</div>
-                        <div class="ui blue label j-text-thin j-opacity-9">健身</div>
-                        <div class="ui blue label j-text-thin j-opacity-9">数码</div>
-                    </div>
-                    <div class="ui attached padded segment">
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">Java</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">C</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">C++</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">MySql</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">HTML</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">CSS3</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">Linux</div>
-                        <div class="ui violet left pointing label j-margin-tb-z-2 j-text-thin">...</div>
-                    </div>
-                    <div class="ui bottom attached padded segment">
-                        <a href="#" class="ui circular icon button"><i class="github large icon"></i></a>
-                        <div class="ui circular icon button"><i class="wechat large icon"></i></div>
-                        <div class="ui circular icon button"><i class="qq large icon"></i></div>
-                    </div>
-
-                    <!--qq二维码-->
-                    <div class="ui qqQR flowing popup transition hidden">
-                        <img src="../static/images/qq.jpg" th:src="@{/images/qq.jpg}" alt="" class="ui rounded image" style="width: 120px;">
-                    </div>
-                    <!--微信二维码-->
-                    <div class="ui wechatQR flowing popup transition hidden">
-                        <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt="" class="ui rounded image" style="width: 120px;">
-                    </div>
+<!--导航-->
+<nav th:replace="_fragments :: nav-active(关于我)"
+     class="ui inverted attached segment j-padded-tb-z-2 j-shadow j-opacity-9">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui violet inverted header item">Jinyu</h2>
+            <a href="" class="j-item item j-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="" class="j-item item j-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="" class="j-item item j-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="" class="j-item item j-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="" class="j-item item j-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right j-item item j-mobile-hide">
+                <div class="ui input icon inverted transparent">
+                    <!--placeholder：占位符-->
+                    <input type="text" placeholder="Search...">
+                    <i class="search icon"></i>
                 </div>
             </div>
         </div>
     </div>
+    <a href="#" class="ui menu toggle black icon button j-top-right j-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
 
-    <!--底部footer-->
-    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment j-padded-tb-5 j-opacity-9">
-        <div class="ui container center aligned">
-            <div class="ui divided inverted stackable grid">
-                <div class="three wide column">
-                    <div class="ui inverted link list">
-                        <div class="item">
-                            <img src="../static/images/wechat.png" class="ui rounded image" alt="" style="width: 9em">
-                        </div>
-                    </div>
+<!--内容-->
+<div class="j-padded-tb-3 j-container animate__animated animate__fadeIn">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!--图片-->
+            <div class="ui eleven wide column">
+                <img id="aboutMeImg" src="#" alt="" class="ui rounded image">
+            </div>
+            <!--个人信息-->
+            <div class="ui five wide column">
+                <div class="ui top attached segment">
+                    <h4 class="ui header">关于我</h4>
                 </div>
-                <div class="three wide column j-opacity-9">
-                    <h4 class="ui inverted header">联系我</h4>
-                    <div class="ui inverted link list">
-                        <a href="" class="item">Email：jinyu52370@qq.com</a>
-                        <a href="" class="item">QQ：441366069</a>
-                        <a href="" class="item">WeChat：乁( ˙ ω˙乁)</a>
-                    </div>
+                <div class="ui attached segment">
+                    <p class="j-text">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
+                    <!--<p class="j-text">这是第二段话木大木大木大木大木大</p>-->
                 </div>
-                <div class="three wide column j-opacity-9">
-                    <h4 class="ui inverted header">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <div class="item">博客1</div>
-                        <div class="item">博客2</div>
-                        <div class="item">博客3</div>
-                    </div>
+                <div class="ui attached padded segment">
+                    <div class="ui blue label j-text-thin j-opacity-9">编程</div>
+                    <div class="ui blue label j-text-thin j-opacity-9">吉他</div>
+                    <div class="ui blue label j-text-thin j-opacity-9">健身</div>
+                    <div class="ui blue label j-text-thin j-opacity-9">数码</div>
                 </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header j-opacity-7">Jinyu</h4>
-                    <p class="j-opacity-5">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
+                <div class="ui attached padded segment">
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">Java</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">C</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">C++</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">MySql</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">HTML</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">CSS3</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">Linux</div>
+                    <div class="ui violet label j-margin-tb-z-2 j-text-thin">...</div>
+                </div>
+                <div class="ui bottom attached padded segment">
+                    <a href="https://gitee.com/jinyu52370" target="_blank" class="ui circular icon button"><i
+                            class="git large icon"></i></a>
+                    <a href="https://github.com/jinyu52370" target="_blank" class="ui circular icon button"><i
+                            class="github large icon"></i></a>
+                    <div class="ui circular icon button"><i class="wechat large icon"></i></div>
+                    <div class="ui circular icon button"><i class="qq large icon"></i></div>
+                </div>
+
+                <!--qq二维码-->
+                <div class="ui qqQR flowing popup transition hidden">
+                    <img src="../static/images/qq.jpg" th:src="@{/images/qq.jpg}" alt="" class="ui rounded image"
+                         style="width: 120px;">
+                </div>
+                <!--微信二维码-->
+                <div class="ui wechatQR flowing popup transition hidden">
+                    <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt=""
+                         class="ui rounded image" style="width: 120px;">
                 </div>
             </div>
-            <div class="ui inverted section divider"></div>
-            <p class="j-text-lined j-text-spaced j-opacity-5">
-                Copyright © 2019 - 2020 Designed by Jinyu
-            </p>
         </div>
-    </footer>
+    </div>
+</div>
 
-    <!--/*/<th:block th:replace="_fragments :: script">/*/-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
-    <!--/*/</th:block>/*/-->
+<!--底部footer-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment j-padded-tb-5 j-opacity-9">
+    <div class="ui container center aligned">
+        <div class="ui divided inverted stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.png" class="ui rounded image" alt="" style="width: 9em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column j-opacity-9">
+                <h4 class="ui inverted header">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="" class="item">Email：jinyu52370@qq.com</a>
+                    <a href="" class="item">QQ：441366069</a>
+                    <a href="" class="item">WeChat：乁( ˙ ω˙乁)</a>
+                </div>
+            </div>
+            <div class="three wide column j-opacity-9">
+                <h4 class="ui inverted header">最新博客</h4>
+                <div class="ui inverted link list">
+                    <div class="item">博客1</div>
+                    <div class="item">博客2</div>
+                    <div class="item">博客3</div>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header j-opacity-7">Jinyu</h4>
+                <p class="j-opacity-5">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="j-text-lined j-text-spaced j-opacity-5">
+            Copyright © 2019 - 2020 Designed by Jinyu
+        </p>
+    </div>
+</footer>
 
-    <!--custom-->
-    <script>
-        // 设置手机端的导航菜单按钮点击显示菜单
-        $('.menu.toggle').click(function () {
-            $('.j-item').toggleClass('j-mobile-hide')
-        });
-        //点击qq图标显示二维码
-        $('.qq').popup({
-            popup: $('.qqQR'),
-            position: 'top center'
-        });
-        //点击微信图标显示二维码
-        $('.wechat').popup({
-            popup: $('.wechatQR'),
-            position: 'top center'
-        });
-        //获取关于我的图片
-        $.get("aboutMe/img", function (data) {
-                $('#aboutMeImg').attr("src", data);
-            }
-        );
-    </script>
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<!--custom-->
+<script>
+    // 设置手机端的导航菜单按钮点击显示菜单
+    $('.menu.toggle').click(function () {
+        $('.j-item').toggleClass('j-mobile-hide')
+    });
+    //点击qq图标显示二维码
+    $('.qq').popup({
+        popup: $('.qqQR'),
+        position: 'top center'
+    });
+    //点击微信图标显示二维码
+    $('.wechat').popup({
+        popup: $('.wechatQR'),
+        position: 'top center'
+    });
+    //获取关于我的图片
+    $.get("aboutMe/img", function (data) {
+            $('#aboutMeImg').attr("src", data);
+        }
+    );
+</script>
 </body>
 </html>
