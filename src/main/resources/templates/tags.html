@@ -98,9 +98,15 @@
                 <div class="ui mobile middle aligned stackable grid j-padded-rl-2 j-mobile-rl-clear">
                     <div class="left aligned column j-margin-tb-z-1">
                         <div class="ui horizontal link list">
-                            <!--时间-->
-                            <span class="ui teal label"
-                                  th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}">2020.5.26</span>
+                            <!--时间、浏览次数-->
+                            <div th:id="'/' + ${blog.id}" class="ui teal label leancloud_visitors">
+                                <!--时间-->
+                                <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"
+                                      style="margin-right: 5px">2020.5.26</span>
+                                <!--浏览次数-->
+                                <i class="eye icon" style="margin-right: -0.1px"></i>
+                                <span class="leancloud-visitors-count"></span>
+                            </div>
                             <!--分类-->
                             <a href="#" target="_blank"
                                class="ui label blue"
@@ -109,9 +115,9 @@
                             <!--标签-->
                             <a href="#" target="_blank"
                                class="ui violet label"
-                               th:classappend="${tag.id != activeTagId} ? 'basic'"
                                th:href="@{/tags/{id}(id=${tag.id})}"
                                th:each="tag : ${blog.tags}"
+                               th:classappend="${tag.id != activeTagId} ? 'basic'"
                                th:text="${tag.name}">方法论</a>
                         </div>
                     </div>

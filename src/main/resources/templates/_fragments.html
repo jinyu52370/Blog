@@ -73,8 +73,8 @@
                     <div class="item">WeChat：乁( ˙ ω˙乁)</div>
                 </div>
             </div>
-            <div class="three wide column j-opacity-9">
-                <h4 class="ui inverted header">最新博客</h4>
+            <div class="five wide column j-opacity-9">
+                <h4 class="ui inverted header">最新推荐</h4>
                 <div id="newestBlogs-container">
                     <div class="ui inverted link list" th:fragment="newestBlogList">
                         <a href="#" target="_blank" class="item"
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <div class="seven wide column">
+            <div class="five wide column">
                 <h4 class="ui inverted header j-opacity-7">Jinyu</h4>
                 <p class="j-opacity-5">这里是我的个人博客，我会记录一些编程、生活、爱好等内容(・ω< )★</p>
             </div>
@@ -229,8 +229,7 @@
                 "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
             }
         })
-        // 动态添加访问数量id
-        $('.visitor').attr('id', location.pathname);
+        // 显示网站运行时间
         show_runtime();
     </script>
 </th:block>

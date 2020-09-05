@@ -42,7 +42,7 @@
 </nav>
 
 <!--内容-->
-<div class="j-padded-tb-3 j-container-small animate__animated animate__fadeIn">
+<div class="j-padded-tb-3 j-container-80 animate__animated animate__fadeIn">
     <div class="ui container">
         <!--头部-->
         <div class="ui padded segment">
@@ -51,7 +51,7 @@
                     <h3 class="ui header">归档</h3>
                 </div>
                 <div class="column right aligned">
-                    共<h2 class="ui header j-inline-block orange" th:text="${blogCount}">110</h2>篇
+                    共<h2 class="ui header j-inline-block j-text-thin orange" th:text="${blogCount}">110</h2>篇
                 </div>
             </div>
         </div>
@@ -63,15 +63,23 @@
             <div class="ui fluid vertical menu">
                 <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item"
                    th:each="blog : ${map.value}">
-                        <span>
-                            <i class="file outline icon"></i><span th:text="${blog.title}">博客文章标题1</span>
-                        </span>
-                    <div class="ui large label j-margin-l-z4 j-padded-tb-z-3 j-padded-rl-z-5"
+                    <!--文章标题-->
+                    <span>
+                        <i class="file outline icon"></i><span th:text="${blog.title}">博客文章标题1</span>
+                    </span>
+                    <!--原创/转载/翻译-->
+                    <div class="ui large label"
                          th:classappend="${blog.flag == '原创'} ? 'red' : (${blog.flag == '转载'} ? 'purple' : 'blue')"
                          th:text="${blog.flag}">原创
                     </div>
-                    <div class="ui large teal label j-padded-rl-z-5"
-                         th:text="${#dates.format(blog.createTime, 'MM月dd日')}">5月28日
+                    <!--时间、浏览次数-->
+                    <div th:id="'/' + ${blog.id}" class="ui teal large label leancloud_visitors">
+                        <!--时间-->
+                        <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"
+                              style="margin-right: 5px">2020.5.26</span>
+                        <!--浏览次数-->
+                        <i class="eye icon" style="margin-right: -0.1px"></i>
+                        <span class="leancloud-visitors-count"></span>
                     </div>
                 </a>
             </div>
