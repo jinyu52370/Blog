@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}">
     <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
     <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <!--进度条-->
+    <link rel="stylesheet" href="lib/nprogress/nprogress.css" th:href="@{/lib/nprogress/nprogress.css}">
 </head>
 <body>
 <!--video background-->
@@ -99,8 +101,10 @@
             <i class="copyright icon"></i>2019 - 2020 /
             <i class="user icon"></i>Jinyu /
             <i class="clock icon"></i><span id="runtime_span"></span> /
-            <i class="eye icon"></i><span id="busuanzi_container_site_pv">PV <span id="busuanzi_value_site_pv"></span></span> /
-            <i class="eye icon"></i><span id="busuanzi_container_site_uv">UV <span id="busuanzi_value_site_uv"></span></span>
+            <i class="eye icon"></i><span id="busuanzi_container_site_pv">PV <span
+                id="busuanzi_value_site_pv"></span></span> /
+            <i class="eye icon"></i><span id="busuanzi_container_site_uv">UV <span
+                id="busuanzi_value_site_uv"></span></span>
         </p>
         <!--备案信息-->
         <p class="j-text-lined j-text-spaced j-opacity-5" style="font-size: small;margin-top: -8px">
@@ -127,8 +131,13 @@
     <script>
         $('#newestBlogs-container').load(/*[[@{/footer/newestBlogs}]]*/"/footer/newestBlogs")
     </script>
+    <!--评论插件-->
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <!--不蒜子-->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!--进度条-->
+    <script src="/lib/nprogress/nprogress.js" th:src="@{/lib/nprogress/nprogress.js}"></script>
+
     <script>
         //离开和回到页面时改变标题
         var originTitle = document.title, titleTime;
@@ -236,6 +245,13 @@
         })
         // 显示网站运行时间
         show_runtime();
+        // 进度条加载: nprogress
+        NProgress.start()
+        NProgress.configure({
+            ease: 'ease-in',
+            speed: 1500
+        });
+        NProgress.done()
     </script>
 </th:block>
 </body>

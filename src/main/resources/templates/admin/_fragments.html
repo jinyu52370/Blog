@@ -17,6 +17,8 @@
           th:href="@{/lib/editormd/css/editormd.min.css}">
     <link rel="stylesheet" href="../../static/lib/simple-crop-master/template-1.css"
           th:href="@{/lib/simple-crop-master/template-1.css}">
+    <!--进度条-->
+    <link rel="stylesheet" href="lib/nprogress/nprogress.css" th:href="@{/lib/nprogress/nprogress.css}">
 </head>
 <body>
 <!--video background-->
@@ -140,6 +142,11 @@
             th:src="@{/lib/simple-crop-master/transformation-matrix.js}"></script>
     <script src="../../static/lib/simple-crop-master/index.js" th:src="@{/lib/simple-crop-master/index.js}"></script>
     <script src="../../static/js/Canvas2Image.js" th:src="@{/js/Canvas2Image.js}"></script>
+    <!--不蒜子-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!--进度条-->
+    <script src="/lib/nprogress/nprogress.js" th:src="@{/lib/nprogress/nprogress.js}"></script>
+
     <script>
         //离开和回到页面时改变标题
         var originTitle = document.title, titleTime;
@@ -180,8 +187,15 @@
             D = Math.floor((c - C) * 60);
             runtime_span.innerHTML = "KeepAlive: " + A + "d " + B + "h " + C + "m " + D + "s"
         }
-
+        // 显示网站运行时间
         show_runtime();
+        // 进度条加载: nprogress
+        NProgress.start()
+        NProgress.configure({
+            ease: 'ease-in',
+            speed: 1500
+        });
+        NProgress.done()
     </script>
 </th:block>
 </body>
