@@ -160,16 +160,18 @@
 </div>
 
 <!--右下角工具条-->
-<div id="toolbar" class="j-fixed j-padded-z-5 j-bottom-right j-opacity-9" style="display: none">
-    <div class="ui vertical icon buttons">
+<div id="toolbar" class="j-fixed j-padded-z-5 j-opacity-9" style="display: none;bottom: 0;right: 0;">
+    <div class="ui vertical black icon large buttons">
         <!--目录按钮-->
-        <button id="toc_button" type="button" class="ui button"><i class="list ol icon"></i></button>
+        <button id="toc_button" type="button" class="ui icon button"><i class="list ol icon"></i></button>
         <!--微信扫码以手机端阅读-->
         <button id="wechat" class="ui icon button"><i class="wechat icon"></i></button>
         <!--跳转到评论-->
-        <a href="#vcomments" type="button" class="ui button"><i class="comment alternate icon"></i></a>
+        <a href="#vcomments" type="button" class="ui icon button"><i class="comment alternate icon"></i></a>
         <!--跳转到导航-->
         <div id="toTop-button" class="ui icon button"><i class="chevron up icon"></i></div>
+        <!--进度百分比-->
+        <div class="ui icon button goup-text" style="width: 3em"></div>
     </div>
 </div>
 
@@ -364,6 +366,17 @@
     $(function () {
         $("#comment-container").load(/*[[@{/comments/{id}(id=${blog.id})}]]*/)
     })
+    // 进度百分比
+    $(document).scroll(function () {
+        var d_h = $(document).height();
+        var c_h = $(window).height();
+        var c_t_h = $(window).scrollTop();
+        var schedule = c_t_h / (d_h - c_h - 0.5);
+        var str = Number(schedule * 100).toFixed();
+        str += "%";
+        $(".goup-text").text(str);
+    });
+
 </script>
 </body>
 </html>
